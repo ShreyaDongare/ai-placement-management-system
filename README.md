@@ -8,6 +8,7 @@ manage placement opportunities and job applications.
 ## Current Development Stage
 
 Day 1 - Python OOP and Student Management Module.
+
 Day 2 - Add JSON file to store information permanently
 
 ## Features
