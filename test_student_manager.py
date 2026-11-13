@@ -15,6 +15,34 @@ class TestStudentManager(unittest.TestCase):
 
         # Each test gets its own StudentManager
         self.manager = StudentManager(file_path=self.file_path)
+        
+    def test_delete_student(self):
+        self.manager.register_student(
+            "101", "Shreya", "shreya@example.com"
+        )
+
+        deleted = self.manager.delete_student("101")
+
+        self.assertEqual(deleted.name, "Shreya")
+        self.assertEqual(self.manager.list_students(), [])
+
+
+    def test_delete_student_persistence(self):
+        self.manager.register_student(
+            "101", "Shreya", "shreya@example.com"
+        )
+
+        self.manager.delete_student("101")
+
+        new_manager = StudentManager(file_path=self.file_path)
+
+        with self.assertRaises(KeyError):
+            new_manager.get_student("101")
+
+
+    def test_delete_non_existing_student(self):
+        with self.assertRaises(KeyError):
+            self.manager.delete_student("999")
 
     def tearDown(self):
         # Remove temporary files after every test

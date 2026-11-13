@@ -11,7 +11,8 @@ def main():
         print("2. View Student")
         print("3. View All Students")
         print("4. Update Student")
-        print("5. Exit")
+        print("5. Delete Student")
+        print("6. Exit")
 
         choice = input("Enter your choice: ").strip()
         
@@ -60,8 +61,15 @@ def main():
                 )
 
                 print("Student updated successfully!")
-
+                
             elif choice == "5":
+                student_id = input("Enter Student ID: ")
+                
+                manager.delete_student(student_id)
+                
+                print("Student deleted successfully")
+
+            elif choice == "6":
 
                 print("Thank you!")
                 break

@@ -111,6 +111,17 @@ class StudentManager:
         self.save_students()
         return student
     
+    def delete_student(self, student_id):
+        student_id = student_id.strip()
+        
+        if student_id not in self.students:
+            raise KeyError("Student not found")
+        
+        student = self.students.pop(student_id)
+        
+        self.save_students()
+        return student 
+    
     def get_student(self, student_id):
 
         student_id = student_id.strip()
