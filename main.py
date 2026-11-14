@@ -1,4 +1,9 @@
 from student_manager import StudentManager
+from validators import (
+    validate_name,
+    validate_email,
+    validate_student_id
+)
 
 def main():
 
@@ -13,30 +18,29 @@ def main():
         print("4. Update Student")
         print("5. Delete Student")
         print("6. Exit")
-
-        choice = input("Enter your choice: ").strip()
         
         try:
+            choice = get_menu_choice()
             
-            if choice == "1":
+            if choice == 1:
 
-                student_id = input("Enter Student ID: ")
-                name = input("Enter Name: ")
-                email = input("Enter Email: ")
+                student_id = validate_student_id(input("Enter Student ID: "))
+                name = validate_name(input("Enter Name: "))
+                email = validate_email(input("Enter Email: "))
 
                 manager.register_student(student_id, name, email)
 
                 print("Student registered successfully!")
 
-            elif choice == "2":
+            elif choice == 2:
 
-                student_id = input("Enter Student ID: ")
+                student_id = validate_student_id(input("Enter Student ID: "))
 
                 student = manager.get_student(student_id)
 
                 student.display()
 
-            elif choice == "3":
+            elif choice == 3:
 
                 students = manager.list_students()
 
@@ -47,29 +51,32 @@ def main():
                         print("\n----------------")
                         student.display()
                         
-            elif choice == "4":
+            elif choice == 4:
 
-                student_id = input("Enter Student ID: ")
+                student_id = validate_student_id(input("Enter Student ID: "))
 
-                name = input("Enter New Name (leave blank to skip): ")
-                email = input("Enter New Email (leave blank to skip): ")
+                name_input = input("Enter New Name (leave blank to skip): ").strip()
+                email_input = input("Enter New Email (leave blank to skip): ").strip()
+                
+                name = validate_name(name_input) if name_input else None
+                email = validate_email(email_input) if email_input else None
 
                 manager.update_student(
                     student_id,
-                    name=name or None,
-                    email=email or None
+                    name=name,
+                    email=email
                 )
 
                 print("Student updated successfully!")
                 
-            elif choice == "5":
-                student_id = input("Enter Student ID: ")
+            elif choice == 5:
+                student_id = validate_student_id(input("Enter Student ID: "))
                 
                 manager.delete_student(student_id)
                 
                 print("Student deleted successfully")
 
-            elif choice == "6":
+            elif choice == 6:
 
                 print("Thank you!")
                 break
@@ -80,6 +87,13 @@ def main():
         except (ValueError, KeyError) as error:
             print("Error:", error)
 
+def get_menu_choice():
+    choice = input("Enter your choice: ").strip()
+
+    if not choice.isdigit():
+        raise ValueError("Please enter a numeric menu choice")
+
+    return int(choice)
 
 if __name__ == "__main__":
     main()

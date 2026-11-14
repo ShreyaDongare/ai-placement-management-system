@@ -201,7 +201,7 @@ git diff
 Stage only the intended files:
 
 ```bash
-git add main.py student_manager.py test_student_manager.py README.md .gitignore
+git add main.py student_manager.py test_student_manager.py README.md .gitignore validators.py
 ```
 
 Commit your changes:
